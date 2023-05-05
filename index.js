@@ -159,7 +159,7 @@ function EU_Parent(selectedattr,selectedyear){
                   graphData.nodes[j]["value"]=data[i][selectedyear];
                   graphData.nodes[j]["radius"] = Math.sqrt(
                     data[i][selectedyear].replace(",", "")
-                  )/10;
+                  )/7;
                   // console.log(graphData.nodes[j]["radius"]);
                 }
               }

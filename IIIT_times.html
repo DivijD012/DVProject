@@ -22,38 +22,54 @@ src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <!-- Create an element where the map will take place -->
-
+<div id="intro" style="text-align: center;font-size: x-large;"><pre>
+  IIIT Times : Economic Data Visualisation
+  Created by: Aman,Yash,Divij
+  This Data visualization aims to study the economic trends between the years 2008 to 2021.
+  These trends are made to aid policy makers, economists and financial advisors in making sound
+  economic decisions and analysis.
+</pre>
+</div>
 <div id = "sections">
   <section class="step" style="border: 5px groove green; background-color: lightgreen;"
   id="worldmap">
     <p></p>
     <h2 style="text-align: center;">Global Visualization </h2>
-<div style="text-align: center;">
-  <div style="display: flex;">
-    <div style="width: 600px;"></div>
-        <label for="attribute">
-          Select A Parameter:&nbsp;
-        </label>
-        <div style="text-align: center;" class="select">
-
-          <select id = "attribute" onchange = "changeYear()" class="">
-            </select>
-        
     
-    </div>
+      <div id="write here for the world map" style="text-align: center;font-size: large;"><pre>
+        We are comparing economic parameters and comparing them over the years 2008 to 2021. A
+        lighter shade corresponds to a lower value and a darker shade corresponds to a larger value.
+        Users can select the parameter of choice and view the global trends in the parameter during the
+        time 2008-2021
+      </pre>
+      </div>
+      <p></p>
+      <div id="graph of chloropeth">
+      
+      <div style="text-align: center;">
+        <div style="display: flex;">
+          <div style="width: 600px;"></div>
+              <label for="attribute">
+                Select A Parameter:&nbsp;
+              </label>
+            <div style="text-align: center;" class="select">
+      
+                <select id = "attribute" onchange = "changeYear()" class="">
+                  </select>
+            </div>
+          </div>
+        </div>
+      </div>
 
-  
-</div>
-</div>
-
-<svg id="my_dataviz" width="1500" height="565"
->
-
-</svg>
 
 <i class="fa-solid fa-rotate-left" style="font-size:30px;color:blue;margin-left: 1300px;margin-top: 20px;" onclick="if(replay == true) changeYear()"></i>
 
 <p></p>
+        <svg id="my_dataviz" width="1500" height="565">
+
+</svg>
+
+      
 </section>
 
 <div style="height:30px;"></div>
@@ -62,6 +78,13 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
 
 <p></p>
 <h2 style="text-align: center;">Country Visualization - I</h2>
+<div id="write here for the world map" style="text-align: center;font-size: large;"><pre>
+  In this visualisation we are analyzing the economic parameters of a particular country. This
+  visualisation lets the users compare the GDP,GDP PPP and GDP per capita income which will
+  help the user get and compare absolute values for the visualisation.
+</pre>
+</div>
+<p></p>
   <div style="display: flex;">
     <div style="width: 450px;"></div>
       <label for="bar_country">
@@ -95,6 +118,13 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
 
   <p></p>
   <h2 style="text-align: center;">Country Visualization - II</h2>
+  <div id="write here for the world map" style="text-align: center;font-size: large;"><pre>
+    In this visualisation we are analyzing the economic parameters of a particular country. This
+    visualisation lets the users compare the Debt (as % of GDP), Inflation rate, Unemployment rate
+    to find the relevant trends in the data.
+  </pre>
+  </div>
+  <p></p>
   <div style="display: flex;">
   <div style="width: 600px;"></div>
       <label for="countryselect">
@@ -125,7 +155,13 @@ id = "linechart"
 
 <p></p>
 <h2 style="text-align: center;">Continents Visualization </h2>
-
+<div id="write here for the world map" style="text-align: center;font-size: large;" ><pre>
+  In this visualisation we are comparing the continents to each other. This stacked bar chart also
+  allows the user to compare the proportional importance of the most economically influential
+  countries in the continent's economic parameters.
+</pre>
+</div>
+<p></p>
   <div id="stack_data" >
   <!-- <div id="stack_data" style="text-align: center;"> -->
     <div style="display: flex;">
@@ -155,17 +191,33 @@ id = "linechart"
 <p></p>
 </section>
 
+
+
 <div style="height:30px;"></div>
 
 <section class="step" >
   <iframe src="index.html" title="Hehe"
-  width="1570" height="780"
+  width="1500" height="900"
   style="border: 5px groove orangered; background-color: white;"
   id="cluster"></iframe>
 </section>
 
 </div>
 
+<footer class="ftco-footer ftco-bg-dark ftco-section">
+  <div class="container">
+    <div class="row mb-5">
+      <div class="col-md-6">
+        <div class="ftco-footer-widget mb-4">
+          <h2 class="ftco-heading-2" >Team: Yash Adivarekar, Aman Raj, Divij </h2>
+          <p style="font-size: 40px;">Made as a part of the Data Visualization (D.V) Course, Spring - 2023, IIIT-H .</p>
+        </div>
+      </div>
+</div>
+
+
+  </div>
+</footer>
 
 <script>
 
@@ -923,7 +975,7 @@ function drawStackedbarChart() {
     selectDivStack = d3.select("#stack_data")
     .append("svg:svg")
     .attr("class", "stack_svg")
-    .attr("width", width + 400)
+    .attr("width", width + 900)
     .attr("height", height + 100)
     // .style("position", "absolute")
     .append("g")
@@ -974,6 +1026,296 @@ function drawStackedbarChart() {
         .attr("transform", "rotate(-90)")
         .text("Values");
 
+    selectDivStack.append("rect")
+    .attr("x", 680)
+    .attr("y", -20)
+    .attr("height", 350)
+    .attr("width", 490)
+    .style("fill", "none")
+    .style("stroke", "black")
+    
+    selectDivStack.append("text")
+    .attr("id", "asian")
+    .attr("text-anchor", "end")
+    .attr("x", 720)
+    .attr("y", 0)
+    .attr("font-weight", "1300")
+    .text("Asia");
+    selectDivStack.append("rect")
+    .attr("x", 700)
+    .attr("y", 10)
+    .attr("height", 20)
+    .attr("width", 20)
+    .style("fill", "#e41a1c");
+    selectDivStack.append("text")
+    .attr("text-anchor", "end")
+    .attr("x", 770)
+    .attr("y", 50)
+    .text("India");
+    selectDivStack.append("rect")
+    .attr("x", 700)
+    .attr("y", 35)
+    .attr("height", 20)
+    .attr("width", 20)
+    .style("fill", "#377eb8");
+    selectDivStack.append("text")
+    .attr("text-anchor", "end")
+    .attr("x", 770)
+    .attr("y", 75)
+    .text("Japan");
+    selectDivStack.append("rect")
+    .attr("x", 700)
+    .attr("y", 60)
+    .attr("height", 20)
+    .attr("width", 20)
+    .style("fill", "#4daf4a");
+    selectDivStack.append("text")
+    .attr("text-anchor", "end")
+    .attr("x", 770)
+    .attr("y", 100)
+    .text("Korea");
+    selectDivStack.append("rect")
+    .attr("x", 700)
+    .attr("y", 85)
+    .attr("height", 20)
+    .attr("width", 20)
+    .style("fill", "#ffc0cb");
+    selectDivStack.append("text")
+    .attr("text-anchor", "end")
+    .attr("x", 790)
+    .attr("y", 125)
+    .text("Indonesia");
+    selectDivStack.append("rect")
+    .attr("x", 700)
+    .attr("y", 110)
+    .attr("height", 20)
+    .attr("width", 20)
+    .style("fill", "#000000");
+    selectDivStack.append("text")
+    .attr("text-anchor", "end")
+    .attr("x", 810)
+    .attr("y", 150)
+    .text("Saudi Arabia");
+    selectDivStack.append("rect")
+    .attr("x", 700)
+    .attr("y", 135)
+    .attr("height", 20)
+    .attr("width", 20)
+    .style("fill", "#FFA500");
+    selectDivStack.append("text")
+    .attr("text-anchor", "end")
+    .attr("x", 770)
+    .attr("y", 25)
+    .text("China");
+    
+    selectDivStack.append("text")
+    .attr("id", "asian")
+    .attr("text-anchor", "end")
+    .attr("x", 900)
+    .attr("y", 0)
+    .text("Europe");
+
+    selectDivStack.append("rect")
+    .attr("x", 860)
+    .attr("y", 10)
+    .attr("height", 20)
+    .attr("width", 20)
+    .style("fill", "#e41a1c");
+    selectDivStack.append("text")
+    .attr("text-anchor", "end")
+    .attr("x", 950)
+    .attr("y", 25)
+    .text("Germany");
+    selectDivStack.append("text")
+    .attr("text-anchor", "end")
+    .attr("x", 1000)
+    .attr("y", 50)
+    .text("United Kingdom");
+    selectDivStack.append("rect")
+    .attr("x", 860)
+    .attr("y", 35)
+    .attr("height", 20)
+    .attr("width", 20)
+    .style("fill", "#377eb8");
+    selectDivStack.append("text")
+    .attr("text-anchor", "end")
+    .attr("x", 940)
+    .attr("y", 75)
+    .text("France");
+    selectDivStack.append("rect")
+    .attr("x", 860)
+    .attr("y", 60)
+    .attr("height", 20)
+    .attr("width", 20)
+    .style("fill", "#4daf4a");
+    selectDivStack.append("text")
+    .attr("text-anchor", "end")
+    .attr("x", 935)
+    .attr("y", 100)
+    .text("Italy");
+    selectDivStack.append("rect")
+    .attr("x", 860)
+    .attr("y", 85)
+    .attr("height", 20)
+    .attr("width", 20)
+    .style("fill", "#ffc0cb");
+    selectDivStack.append("text")
+    .attr("text-anchor", "end")
+    .attr("x", 940)
+    .attr("y", 125)
+    .text("Russia");
+    selectDivStack.append("rect")
+    .attr("x", 860)
+    .attr("y", 110)
+    .attr("height", 20)
+    .attr("width", 20)
+    .style("fill", "#000000");
+    
+    selectDivStack.append("text")
+    .attr("id", "asian")
+    .attr("text-anchor", "end")
+    .attr("x", 1080)
+    .attr("y", 0)
+    .text("America");
+    
+    selectDivStack.append("text")
+    .attr("text-anchor", "end")
+    .attr("x", 1150)
+    .attr("y", 25)
+    .text("United States");
+    selectDivStack.append("rect")
+    .attr("x", 1030)
+    .attr("y", 10)
+    .attr("height", 20)
+    .attr("width", 20)
+    .style("fill", "#FFA500");
+
+    selectDivStack.append("text")
+    .attr("text-anchor", "end")
+    .attr("x", 1100)
+    .attr("y", 50)
+    .text("Brazil");
+    selectDivStack.append("rect")
+    .attr("x", 1030)
+    .attr("y", 35)
+    .attr("height", 20)
+    .attr("width", 20)
+    .style("fill", "#e41a1c");
+    selectDivStack.append("text")
+    .attr("text-anchor", "end")
+    .attr("x", 1100)
+    .attr("y", 75)
+    .text("Canada");
+    selectDivStack.append("rect")
+    .attr("x", 1030)
+    .attr("y", 60)
+    .attr("height", 20)
+    .attr("width", 20)
+    .style("fill", "#377eb8");
+    selectDivStack.append("text")
+    .attr("text-anchor", "end")
+    .attr("x", 1100)
+    .attr("y", 100)
+    .text("Mexico");
+    selectDivStack.append("rect")
+    .attr("x", 1030)
+    .attr("y", 85)
+    .attr("height", 20)
+    .attr("width", 20)
+    .style("fill", "#4daf4a");
+
+    selectDivStack.append("text")
+    .attr("id", "asian")
+    .attr("text-anchor", "end")
+    .attr("x", 850)
+    .attr("y", 200)
+    .text("Africa");
+
+    selectDivStack.append("text")
+    .attr("text-anchor", "end")
+    .attr("x", 890)
+    .attr("y", 225)
+    .text("Nigeria");
+    selectDivStack.append("rect")
+    .attr("x", 810)
+    .attr("y", 210)
+    .attr("height", 20)
+    .attr("width", 20)
+    .style("fill", "#ffc0cb");
+    selectDivStack.append("text")
+    .attr("text-anchor", "end")
+    .attr("x", 890)
+    .attr("y", 250)
+    .text("Egypt");
+    selectDivStack.append("rect")
+    .attr("x", 810)
+    .attr("y", 235)
+    .attr("height", 20)
+    .attr("width", 20)
+    .style("fill", "#000000");
+    selectDivStack.append("text")
+    .attr("text-anchor", "end")
+    .attr("x", 920)
+    .attr("y", 275)
+    .text("South Africa");
+    selectDivStack.append("rect")
+    .attr("x", 810)
+    .attr("y", 260)
+    .attr("height", 20)
+    .attr("width", 20)
+    .style("fill", "#FFA500");
+    selectDivStack.append("text")
+    .attr("text-anchor", "end")
+    .attr("x", 890)
+    .attr("y", 300)
+    .text("Algeria");
+    selectDivStack.append("rect")
+    .attr("x", 810)
+    .attr("y", 285)
+    .attr("height", 20)
+    .attr("width", 20)
+    .style("fill", "#e41a1c");
+
+    selectDivStack.append("text")
+    .attr("id", "asian")
+    .attr("text-anchor", "end")
+    .attr("x", 1000)
+    .attr("y", 200)
+    .text("Oceania");
+
+    selectDivStack.append("text")
+    .attr("text-anchor", "end")
+    .attr("x", 1050)
+    .attr("y", 225)
+    .text("Australia");
+    selectDivStack.append("rect")
+    .attr("x", 960)
+    .attr("y", 210)
+    .attr("height", 20)
+    .attr("width", 20)
+    .style("fill", "#377eb8");
+    selectDivStack.append("text")
+    .attr("text-anchor", "end")
+    .attr("x", 1070)
+    .attr("y", 250)
+    .text("New Zealand");
+    selectDivStack.append("rect")
+    .attr("x", 960)
+    .attr("y", 235)
+    .attr("height", 20)
+    .attr("width", 20)
+    .style("fill", "#4daf4a");
+    selectDivStack.append("text")
+    .attr("text-anchor", "end")
+    .attr("x", 1110)
+    .attr("y", 275)
+    .text("Papua New Guinea");
+    selectDivStack.append("rect")
+    .attr("x", 960)
+    .attr("y", 260)
+    .attr("height", 20)
+    .attr("width", 20)
+    .style("fill", "#ffc0cb");
 }
 
   var bar_x = d3.scaleBand()
@@ -996,30 +1338,27 @@ function drawStackedbarChart() {
           .attr("transform", "translate(40," +0 + ")")
           .attr("x", function(d) {return bar_x(d.year)})
           .attr("width", bar_x.bandwidth())
+          .attr('id',function(d){return d.year.replace('2','two').replace('0','zero')}) 
           .attr("y", 560)
           .attr("height", 0)
+          .on('mouseover',function(d){
+            var value = d.value 
+            var tooltipContent = `${d.value}\n`
+      tippy('#'+d.year.replace('2','two').replace('0','zero'), {
+            content: tooltipContent,
+            followCursor: true
+          });
+      return;
+          })
           .transition()
           .duration(2000)
+          
           .attr("x", function(d) {return bar_x(d.year)})
           .attr("width", bar_x.bandwidth())
           .attr("y", function(d){return bar_y(d.value)})
           .attr("height", function(d){return 560 - bar_y(d.value)})
           .attr("fill", function(d) {return barColorScale(d.value)})
-          .on('mouseover',function(d){
-            var tooltipContent = `Country: ${x}\n`
-    if(z[0] === '-'){
-      tippy('#'+'hehe', {
-            content: tooltipContent,
-            followCursor: true
-          });
-      return;
-    }
-
-          tippy('#'+z, {
-            content: tooltipContent,
-            followCursor: true
-          });
-          })
+          
           selectDiv.append("g")
               .attr("transform", "translate(40," + 560 + ")")
               .call(d3.axisBottom(bar_x));
