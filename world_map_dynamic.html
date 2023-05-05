@@ -7,21 +7,35 @@
 <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
 <script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
 <script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.min.js"></script>
-<script src="https://unpkg.com/tippy.js@6/dist/tippy-bundle.umd.js">
+<script src="https://unpkg.com/tippy.js@6/dist/tippy-bundle.umd.js"></script>
 
+<link href="world_map.css" rel="stylesheet">
 
-</script>
 <link rel="stylesheet" 
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <!-- Create an element where the map will take place -->
+
+<div id = "sections">
+  <section class="step" style="border: 5px groove green; background-color: lightgreen;">
+    <p></p>
+    <h2 style="text-align: center;">Global Visualization </h2>
 <div style="text-align: center;">
+  <div style="display: flex;">
+    <div style="width: 600px;"></div>
+        <label for="attribute">
+          Select A Parameter:&nbsp;
+        </label>
+        <div style="text-align: center;" class="select">
 
-  <select id = "attribute" onchange = "changeYear()" >
-    </select>
+          <select id = "attribute" onchange = "changeYear()" class="">
+            </select>
+        
+    
+    </div>
 
-  <p></p>
   
+</div>
 </div>
 
 <svg id="my_dataviz" width="1500" height="565"
@@ -31,27 +45,60 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
 
 <i class="fa-solid fa-rotate-left" style="font-size:30px;color:blue;margin-left: 1300px;margin-top: 20px;" onclick="if(replay == true) changeYear()"></i>
 
-<div style="text-align: center;">
+<p></p>
+</section>
 
-  <select id = "bar_country" onchange = "changeBarCountry()" >
-    </select>
+<div style="height:30px;"></div>
 
-    <select id = "bar_attribute" onchange = "changeBarCountry()" >
-    </select>
+<section class="step" style="border: 5px groove orange; background-color: lightskyblue;">
 
-  <p></p>
+<p></p>
+<h2 style="text-align: center;">Country Visualization - I</h2>
+  <div style="display: flex;">
+    <div style="width: 450px;"></div>
+      <label for="bar_country">
+        Select An Year:&nbsp;
+      </label>
+    <div style="text-align: center;" class="select">
+
+      <select id = "bar_country" onchange = "changeBarCountry()" >
+        </select>
+      </div>
+      <div style="width:100px;"></div>
+      <label for="bar_attribute">
+        Select A Parameter:&nbsp;
+      </label>
+        <div style="text-align: center;" class="select">
+        <select id = "bar_attribute" onchange = "changeBarCountry()" >
+        </select>
+        </div>
+  </div>
+
+  <svg id="bar_chart" width="800" height="620" style="margin-left: 350px;margin-top:50px"> </svg>
   
 </div>
 
-<svg id="bar_chart" width="800" height="620" style="margin-left: 350px;margin-top:50px"> </svg>
+<p></p>
+</section>
 
+<div style="height:30px;"></div>
 
-<div style="text-align: center;">
+<section class="step" style="border: 5px groove yellow; background-color: lightcyan;">
+
+  <p></p>
+  <h2 style="text-align: center;">Country Visualization - II</h2>
+  <div style="display: flex;">
+  <div style="width: 600px;"></div>
+      <label for="countryselect">
+        Select A Country Code From Here:&nbsp;
+      </label>
+  <div style="text-align: center;" class="select">
 
   <select id = "countryselect" onchange = "selectCountry()" >
     </select>
+  
+  </div>
 
-  <p></p>
   
 </div>
 
@@ -61,12 +108,91 @@ id = "linechart"
   
 </svg>
 
+<p></p>
+</section>
+
+<div style="height:30px;"></div>
+
+<section class="step" style="border: 5px groove blue; background-color: white;">
+
+<p></p>
+<h2 style="text-align: center;">Continents Visualization </h2>
+  <div id="stack_data" >
+  <!-- <div id="stack_data" style="text-align: center;"> -->
+    <div style="display: flex;">
+      <div style="width: 300px;"></div>
+      <label for="stack_year">
+        Select An Year:&nbsp;
+      </label>
+      <div class="select" style="width: 200px;">
+        
+        <select id = "stack_year" onchange = "changeStackCountry()" >
+        </select>
+      </div>
+
+      <div style="width:100px;"></div>
+      <label for="stack_year">
+        Select A Parameter:&nbsp;
+      </label>
+      <div class="select" style="width: 200px;">
+        <select id = "stack_attribute" onchange = "changeStackCountry()">
+        </select>
+      </div>
+    </div>
+    
+    
+  </div>
+
+<p></p>
+</section>
+
+<div style="height:30px;"></div>
+
+<section class="step" >
+  <iframe src="index.html" title="Hehe"
+  width="1570" height="780"
+  style="border: 5px groove orangered; background-color: white;"></iframe>
+</section>
+
+</div>
+
 
 <script>
 
 
 var replay = true;
 var worldmap;
+
+var activateFunctions = [];
+var updateFunctions = [];
+
+var setupSections = function () {
+    // activateFunctions are called each
+    // time the active section changes
+    activateFunctions[0] = showTitle;
+    activateFunctions[1] = showFillerTitle;
+    activateFunctions[2] = showGrid;
+    activateFunctions[3] = highlightGrid;
+    activateFunctions[4] = showBar;
+    activateFunctions[5] = showHistPart;
+    activateFunctions[6] = showHistAll;
+    activateFunctions[7] = showCough;
+    activateFunctions[8] = showHistAll;
+
+    // updateFunctions are called while
+    // in a particular section to update
+    // the scroll progress in that section.
+    // Most sections do not need to be updated
+    // for all scrolling and so are set to
+    // no-op functions.
+    for (var i = 0; i < 9; i++) {
+      updateFunctions[i] = function () {};
+    }
+    updateFunctions[7] = updateCough;
+  };
+
+var lastIndex = -1;
+  var activeIndex = 0;
 
 // Fills the years in the select of the year 
 
@@ -83,6 +209,10 @@ var optionForBarCountry = document.getElementById('bar_country')
 
 var optionForBarAttribute = document.getElementById('bar_attribute')
 
+var optionForStackYear = document.getElementById('stack_year')
+
+var optionForStackAttribute = document.getElementById('stack_attribute')
+
 var attributes = [
   'GDP','GDP (Adjusted to PPP)',
   'Per Capita Income','Unemployement Rate','Inflation Rate','Debt (As Percentage Of GDP)',
@@ -93,6 +223,12 @@ var bar_attributes = [
 'GDP','GDP (Adjusted to PPP)',
   'Per Capita Income',
 ]
+
+var stack_attributes = [
+'GDP','GDP (Adjusted to PPP)',
+  'Per Capita Income',
+]
+
 
 var country = []
 
@@ -116,6 +252,28 @@ bar_attributes.forEach((e)=>{
   newnode.id = e 
 
   optionForBarAttribute.append(
+    newnode 
+  )
+})
+
+stack_attributes.forEach((e)=>{
+  var newnode = document.createElement('option')
+
+  newnode.innerHTML = e 
+  newnode.id = e 
+
+  optionForStackAttribute.append(
+    newnode 
+  )
+})
+
+years.forEach((e)=>{
+  var newnode = document.createElement('option')
+
+  newnode.innerHTML = e 
+  newnode.id = e 
+
+  optionForStackYear.append(
     newnode 
   )
 })
@@ -244,6 +402,25 @@ function changeYear(){
     ready('',topo) 
   })
 
+}
+var selectDivStack;
+
+var select_stack_year = '2008'
+var select_stack_attribute = 'GDP'
+
+function changeStackCountry() {
+  myAttributeList = document.getElementById("stack_attribute");
+  var selectedAttributes = myAttributeList.options[myAttributeList.selectedIndex].text;
+  select_stack_attribute = selectedAttributes;
+
+  mylist = document.getElementById("stack_year");
+  var selectedYear = mylist.options[mylist.selectedIndex].text;
+
+  select_stack_year = selectedYear;
+
+  selectDivStack.selectAll("*").remove()
+  d3.select(".stack_svg").remove()
+  drawStackedbarChart();
 }
 
 function changeBarCountry() {
@@ -503,6 +680,275 @@ d3.queue()
       }
     })
   .await(ready);
+
+  stack_map_asia = ['CHN', 'IND', 'JPN', 'KOR', 'IDN', 'SAU']
+stack_map_europe = ['DEU', 'GBR', 'FRA', 'ITA', 'RUS']
+stack_map_america = ['USA', 'BRA', 'CAN', 'MEX']
+stack_map_africa = ['NGA', 'EGY', 'ZAF', 'DZA']
+stack_map_oceania = ['AUS', 'NZL', 'PNG']
+stack_all_countries = []
+stack_continent = ['Asia', 'Europe', 'America', 'Africa', 'Oceania']
+
+
+// var selectDivStack;
+stack_all_countries.push(...stack_map_asia)
+stack_all_countries.push(...stack_map_europe)
+stack_all_countries.push(...stack_map_america)
+stack_all_countries.push(...stack_map_africa)
+stack_all_countries.push(...stack_map_oceania)
+
+function drawStackedbarChart() {
+  console.log(stack_all_countries)
+  stack_group_countries = []
+  width = 720
+  height = 375
+  var stack_x = d3.scaleBand()
+          .range([0, width])
+          .padding(0.1);
+  var stack_y = d3.scaleLinear()
+          .range([height, 0]);
+  if(select_stack_attribute === "GDP")
+  {
+    stack_y.domain([0, 30000]);
+    for (let i=0;i<stack_continent.length;i++) {
+    stack_group_countries[stack_continent[i]] = []
+    }
+    for(let i=0;i<stack_map_asia.length;i++) {
+      for (let j=0;j<stack_continent.length;j++) {
+        if(data_store_gdp.get(stack_map_asia[i])[Number(select_stack_year) - 2008] == 'n/a' || data_store_gdp.get(stack_map_asia[i])[Number(select_stack_year) - 2008] == "")
+          continue
+        if(stack_continent[j] == 'Asia')
+          stack_group_countries[stack_continent[j]][stack_map_asia[i]] = Number(data_store_gdp.get(stack_map_asia[i])[Number(select_stack_year) - 2008].replace(',',''));
+        else
+          stack_group_countries[stack_continent[j]][stack_map_asia[i]] = 0;
+      } 
+    }
+    for(let i=0;i<stack_map_europe.length;i++) {
+      for (let j=0;j<stack_continent.length;j++) {
+        if(data_store_gdp.get(stack_map_europe[i])[Number(select_stack_year) - 2008] == 'n/a' || data_store_gdp.get(stack_map_europe[i])[Number(select_stack_year) - 2008] == "")
+          continue
+        if(stack_continent[j] == 'Europe')
+          stack_group_countries[stack_continent[j]][stack_map_europe[i]] = Number(data_store_gdp.get(stack_map_europe[i])[Number(select_stack_year) - 2008].replace(',',''));
+        else
+          stack_group_countries[stack_continent[j]][stack_map_europe[i]] = 0;
+      } 
+    }
+    for(let i=0;i<stack_map_america.length;i++) {
+      for (let j=0;j<stack_continent.length;j++) {
+        if(data_store_gdp.get(stack_map_america[i])[Number(select_stack_year) - 2008] == 'n/a' || data_store_gdp.get(stack_map_america[i])[Number(select_stack_year) - 2008] == "")
+          continue
+        if(stack_continent[j] == 'America')
+          stack_group_countries[stack_continent[j]][stack_map_america[i]] = Number(data_store_gdp.get(stack_map_america[i])[Number(select_stack_year) - 2008].replace(',',''));
+        else
+          stack_group_countries[stack_continent[j]][stack_map_america[i]] = 0;
+      } 
+    }
+    for(let i=0;i<stack_map_africa.length;i++) {
+      for (let j=0;j<stack_continent.length;j++) {
+        if(data_store_gdp.get(stack_map_africa[i])[Number(select_stack_year) - 2008] == 'n/a' || data_store_gdp.get(stack_map_africa[i])[Number(select_stack_year) - 2008] == "")
+          continue
+        if(stack_continent[j] == 'Africa')
+          stack_group_countries[stack_continent[j]][stack_map_africa[i]] = Number(data_store_gdp.get(stack_map_africa[i])[Number(select_stack_year) - 2008].replace(',',''));
+        else
+          stack_group_countries[stack_continent[j]][stack_map_africa[i]] = 0;
+      } 
+    }
+    for(let i=0;i<stack_map_oceania.length;i++) {
+      for (let j=0;j<stack_continent.length;j++) {
+        if(data_store_gdp.get(stack_map_oceania[i])[Number(select_stack_year) - 2008] == 'n/a' || data_store_gdp.get(stack_map_oceania[i])[Number(select_stack_year) - 2008] == "")
+          continue
+        if(stack_continent[j] == 'Oceania')
+          stack_group_countries[stack_continent[j]][stack_map_oceania[i]] = Number(data_store_gdp.get(stack_map_oceania[i])[Number(select_stack_year) - 2008].replace(',',''));
+        else
+          stack_group_countries[stack_continent[j]][stack_map_oceania[i]] = 0;
+      } 
+    }
+  }
+  else if(select_stack_attribute === "Per Capita Income")
+  {
+    stack_y.domain([0, 250000]);
+    console.log(select_stack_year)
+    for (let i=0;i<stack_continent.length;i++) {
+    stack_group_countries[stack_continent[i]] = []
+    }
+    for(let i=0;i<stack_map_asia.length;i++) {
+      for (let j=0;j<stack_continent.length;j++) {
+        if(data_store_pci.get(stack_map_asia[i])[Number(select_stack_year) - 2008] == 'n/a' || data_store_pci.get(stack_map_asia[i])[Number(select_stack_year) - 2008] == "")
+          continue
+        if(stack_continent[j] == 'Asia')
+          stack_group_countries[stack_continent[j]][stack_map_asia[i]] = Number(data_store_pci.get(stack_map_asia[i])[Number(select_stack_year) - 2008].replace(',',''));
+        else
+          stack_group_countries[stack_continent[j]][stack_map_asia[i]] = 0;
+      } 
+    }
+    for(let i=0;i<stack_map_europe.length;i++) {
+      for (let j=0;j<stack_continent.length;j++) {
+        if(data_store_pci.get(stack_map_europe[i])[Number(select_stack_year) - 2008] == 'n/a' || data_store_pci.get(stack_map_europe[i])[Number(select_stack_year) - 2008] == "")
+          continue
+        if(stack_continent[j] == 'Europe')
+          stack_group_countries[stack_continent[j]][stack_map_europe[i]] = Number(data_store_pci.get(stack_map_europe[i])[Number(select_stack_year) - 2008].replace(',',''));
+        else
+          stack_group_countries[stack_continent[j]][stack_map_europe[i]] = 0;
+      } 
+    }
+    for(let i=0;i<stack_map_america.length;i++) {
+      for (let j=0;j<stack_continent.length;j++) {
+        if(data_store_pci.get(stack_map_america[i])[Number(select_stack_year) - 2008] == 'n/a' || data_store_pci.get(stack_map_america[i])[Number(select_stack_year) - 2008] == "")
+          continue
+        if(stack_continent[j] == 'America')
+          stack_group_countries[stack_continent[j]][stack_map_america[i]] = Number(data_store_pci.get(stack_map_america[i])[Number(select_stack_year) - 2008].replace(',',''));
+        else
+          stack_group_countries[stack_continent[j]][stack_map_america[i]] = 0;
+      } 
+    }
+    for(let i=0;i<stack_map_africa.length;i++) {
+      for (let j=0;j<stack_continent.length;j++) {
+        if(data_store_pci.get(stack_map_africa[i])[Number(select_stack_year) - 2008] == 'n/a' || data_store_pci.get(stack_map_africa[i])[Number(select_stack_year) - 2008] == "")
+          continue
+        if(stack_continent[j] == 'Africa')
+          stack_group_countries[stack_continent[j]][stack_map_africa[i]] = Number(data_store_pci.get(stack_map_africa[i])[Number(select_stack_year) - 2008].replace(',',''));
+        else
+          stack_group_countries[stack_continent[j]][stack_map_africa[i]] = 0;
+      } 
+    }
+    for(let i=0;i<stack_map_oceania.length;i++) {
+      for (let j=0;j<stack_continent.length;j++) {
+        if(data_store_pci.get(stack_map_oceania[i])[Number(select_stack_year) - 2008] == 'n/a' || data_store_pci.get(stack_map_oceania[i])[Number(select_stack_year) - 2008] == "")
+          continue
+        if(stack_continent[j] == 'Oceania')
+          stack_group_countries[stack_continent[j]][stack_map_oceania[i]] = Number(data_store_pci.get(stack_map_oceania[i])[Number(select_stack_year) - 2008].replace(',',''));
+        else
+          stack_group_countries[stack_continent[j]][stack_map_oceania[i]] = 0;
+      } 
+    }
+  }
+
+  else if(select_stack_attribute === "GDP (Adjusted to PPP)")
+  {
+    stack_y.domain([0, 60000]);
+    console.log(select_stack_year)
+    for (let i=0;i<stack_continent.length;i++) {
+    stack_group_countries[stack_continent[i]] = []
+    }
+    for(let i=0;i<stack_map_asia.length;i++) {
+      for (let j=0;j<stack_continent.length;j++) {
+        if(data_store_gdp_ppp.get(stack_map_asia[i])[Number(select_stack_year) - 2008] == 'n/a' || data_store_gdp_ppp.get(stack_map_asia[i])[Number(select_stack_year) - 2008] == "")
+          continue
+        if(stack_continent[j] == 'Asia')
+          stack_group_countries[stack_continent[j]][stack_map_asia[i]] = Number(data_store_gdp_ppp.get(stack_map_asia[i])[Number(select_stack_year) - 2008].replace(',',''));
+        else
+          stack_group_countries[stack_continent[j]][stack_map_asia[i]] = 0;
+      } 
+    }
+    for(let i=0;i<stack_map_europe.length;i++) {
+      for (let j=0;j<stack_continent.length;j++) {
+        if(data_store_gdp_ppp.get(stack_map_europe[i])[Number(select_stack_year) - 2008] == 'n/a' || data_store_gdp_ppp.get(stack_map_europe[i])[Number(select_stack_year) - 2008] == "")
+          continue
+        if(stack_continent[j] == 'Europe')
+          stack_group_countries[stack_continent[j]][stack_map_europe[i]] = Number(data_store_gdp_ppp.get(stack_map_europe[i])[Number(select_stack_year) - 2008].replace(',',''));
+        else
+          stack_group_countries[stack_continent[j]][stack_map_europe[i]] = 0;
+      } 
+    }
+    for(let i=0;i<stack_map_america.length;i++) {
+      for (let j=0;j<stack_continent.length;j++) {
+        if(data_store_gdp_ppp.get(stack_map_america[i])[Number(select_stack_year) - 2008] == 'n/a' || data_store_gdp_ppp.get(stack_map_america[i])[Number(select_stack_year) - 2008] == "")
+          continue
+        if(stack_continent[j] == 'America')
+          stack_group_countries[stack_continent[j]][stack_map_america[i]] = Number(data_store_gdp_ppp.get(stack_map_america[i])[Number(select_stack_year) - 2008].replace(',',''));
+        else
+          stack_group_countries[stack_continent[j]][stack_map_america[i]] = 0;
+      } 
+    }
+    for(let i=0;i<stack_map_africa.length;i++) {
+      for (let j=0;j<stack_continent.length;j++) {
+        if(data_store_gdp_ppp.get(stack_map_africa[i])[Number(select_stack_year) - 2008] == 'n/a' || data_store_gdp_ppp.get(stack_map_africa[i])[Number(select_stack_year) - 2008] == "")
+          continue
+        if(stack_continent[j] == 'Africa')
+          stack_group_countries[stack_continent[j]][stack_map_africa[i]] = Number(data_store_gdp_ppp.get(stack_map_africa[i])[Number(select_stack_year) - 2008].replace(',',''));
+        else
+          stack_group_countries[stack_continent[j]][stack_map_africa[i]] = 0;
+      } 
+    }
+    for(let i=0;i<stack_map_oceania.length;i++) {
+      for (let j=0;j<stack_continent.length;j++) {
+        if(data_store_gdp_ppp.get(stack_map_oceania[i])[Number(select_stack_year) - 2008] == 'n/a' || data_store_gdp_ppp.get(stack_map_oceania[i])[Number(select_stack_year) - 2008] == "")
+          continue
+        if(stack_continent[j] == 'Oceania')
+          stack_group_countries[stack_continent[j]][stack_map_oceania[i]] = Number(data_store_gdp_ppp.get(stack_map_oceania[i])[Number(select_stack_year) - 2008].replace(',',''));
+        else
+          stack_group_countries[stack_continent[j]][stack_map_oceania[i]] = 0;
+      } 
+    }
+  }
+  data_graph = []
+  for(let i =0;i<stack_continent.length;i++) {
+    data_graph.push({continent:stack_continent[i], CHN:stack_group_countries[stack_continent[i]]['CHN'], IND:stack_group_countries[stack_continent[i]]['IND'], JPN:stack_group_countries[stack_continent[i]]['JPN'], KOR:stack_group_countries[stack_continent[i]]['KOR'], IDN:stack_group_countries[stack_continent[i]]['IDN'], SAU:stack_group_countries[stack_continent[i]]['SAU'], DEU:stack_group_countries[stack_continent[i]]['DEU'], GBR:stack_group_countries[stack_continent[i]]['GBR'], FRA:stack_group_countries[stack_continent[i]]['FRA'], ITA:stack_group_countries[stack_continent[i]]['ITA'], RUS:stack_group_countries[stack_continent[i]]['RUS'], USA:stack_group_countries[stack_continent[i]]['USA'], BRA:stack_group_countries[stack_continent[i]]['BRA'], CAN:stack_group_countries[stack_continent[i]]['CAN'], MEX:stack_group_countries[stack_continent[i]]['MEX'], NGA:stack_group_countries[stack_continent[i]]['NGA'], EGY:stack_group_countries[stack_continent[i]]['EGY'], ZAF:stack_group_countries[stack_continent[i]]['ZAF'], DZA:stack_group_countries[stack_continent[i]]['DZA'], AUS:stack_group_countries[stack_continent[i]]['AUS'], NZL:stack_group_countries[stack_continent[i]]['NZL'], PNG:stack_group_countries[stack_continent[i]]['PNG']})
+  }
+  console.log(data_graph)
+    var groups = data_graph.map(function(d) { return d.continent; });
+    stack_x.domain(groups);
+    var color = d3.scaleOrdinal()
+    .domain(stack_all_countries)
+    .range(['#e41a1c','#377eb8','#4daf4a','#ffc0cb', '#000000', '#FFA500'])
+    var stackedData = d3.stack()
+    .keys(stack_all_countries)
+    (data_graph)
+    selectDivStack = d3.select("#stack_data")
+    .append("svg:svg")
+    .attr("class", "stack_svg")
+    .attr("width", width + 400)
+    .attr("height", height + 100)
+    // .style("position", "absolute")
+    .append("g")
+    .attr("transform", "translate(" + 300 + "," + 50 + ")");
+    // console.log(stackedData)
+    selectDivStack.append("g")
+    .selectAll("g")
+    .data(stackedData)
+    .enter().append("g")
+    .attr("fill", function(d) { return color(d.key); })
+    .selectAll("rect")
+    .data(function(d) { return d; })
+    .enter().append("rect")
+        .attr("x", function(d) {
+          return stack_x(d.data.continent); 
+        })
+        .attr("y", function(d) {return stack_y(d[1]);})
+        .attr("width",stack_x.bandwidth())
+        .attr("height", "0")
+        .transition()
+        .duration(2000)
+        .attr("x", function(d) {
+          return stack_x(d.data.continent); 
+        })
+        .attr("width",stack_x.bandwidth())
+        .attr("y", function(d) { return stack_y(d[1]); })
+        .attr("height", function(d) { return stack_y(d[0]) - stack_y(d[1]); })
+
+    selectDivStack.append("g")
+        .attr("transform", "translate(0," + height + ")")
+        .call(d3.axisBottom(stack_x));
+
+    selectDivStack.append("g")
+        .call(d3.axisLeft(stack_y));
+
+    selectDivStack.append("text")
+        .attr("id", "label_x")
+        .attr("text-anchor", "end")
+        .attr("x", 400)
+        .attr("y", 420)
+        .text("Continents");
+    selectDivStack.append("text")
+        .attr("id", "label_y")
+        .attr("text-anchor", "end")
+        .attr("y", -60)
+        .attr("x", -160)
+        .attr("dy", ".75em")
+        .attr("transform", "rotate(-90)")
+        .text("Values");
+
+}
 
   var bar_x = d3.scaleBand()
           .range([0, 700])
@@ -961,6 +1407,8 @@ function colorWorldMap(topo, worldmap, colorScale) {
 // Now add a variable to update the value 
 var selectedAttribute = 'GDP'
 
+
+
 function settingAllIntervals(topo, worldmap, colorScale, pointer) {
   mapInterval = setInterval(function() {colorWorldMap(topo, worldmap, colorScale)}, 14500)
   pointerInterval = setInterval(function() { moveTimeLine(pointer)}, 14450)
@@ -974,15 +1422,7 @@ svg
         .attr("y1", 100)
         .attr("x2", 1300)
         .attr("y2", 550);
-        
-        // svg
-        // .append("line")
-        // .attr("x1", 1300)
-        // .attr("y1", 102)
-        // .attr("x2", 1310)
-        // .attr("y2", 102)
-        // .style("stroke", "black")
-        // .style("stroke-width", "3")
+
 
         svg
         .selectAll(".line_ticks")
@@ -1026,12 +1466,10 @@ for(const entry of data_store_debtasgdp){
   )
 }
 
+
+
   // Random bullshit
   var svg_line = d3.select('#linechart')
-
-    
-    
-  
   plotGraph() 
   var title = selectedAttribute + ' ' + ', Countrywise'
   if(selectedAttribute === 'GDP'){
@@ -1172,6 +1610,7 @@ for(const entry of data_store_debtasgdp){
 
       if(firstDraw == true) {
         firstDraw = false;
+        drawStackedbarChart();
         drawBarChart();
       }
 
@@ -1206,6 +1645,7 @@ for(const entry of data_store_debtasgdp){
     function plotGraph(){
       console.log(data_store_debtasgdp)
       // var array = data_store_debtasgdp[selectedCountry]
+      document.getElementById('label_line').textContent = 'Unemployement, Inflation Rate and Debt (as % of GDP) over the Years, for ' + selectedCountry
     
     line_data = [
       [], // Debt as % of GDP 
@@ -1471,7 +1911,58 @@ for(const entry of data_store_debtasgdp){
         .style("stroke", "green")
         .style("stroke-width", "2");
     
-            
+        svg_line.append('text')
+    .attr('x','440')
+    .attr('y','40')
+    .attr('id','label_line')
+    .attr('fill','black')
+    .style('font-weight','bold')
+    .style('font-size','20')
+    .text('Unemployement, Inflation Rate and Debt (as % of GDP) over the Years, for ' + selectedCountry)
+
+
+    svg_line.append('circle')
+    .attr('cx','890')
+    .attr('cy','65')
+    .attr('fill','blue')
+    .attr('r','6')
+    svg_line.append('text')
+    .attr('x','900')
+    .attr('y','70')
+    .attr('id','label_line')
+    .attr('fill','black')
+    .style('font-weight','bold')
+    
+    .text('Unemployement')
+
+
+    svg_line.append('circle')
+    .attr('cx','710')
+    .attr('cy','65')
+    .attr('fill','green')
+    .attr('r','6')
+    svg_line.append('text')
+    .attr('x','720')
+    .attr('y','70')
+    .attr('id','label_line')
+    .attr('fill','black')
+    .style('font-weight','bold')
+    .text('Inflation Rate')
+
+    svg_line.append('circle')
+    .attr('cx','490')
+    .attr('cy','65')
+    .attr('fill','red')
+    .attr('r','6')
+    svg_line.append('text')
+    .attr('x','500')
+    .attr('y','70')
+    .attr('id','label_line')
+    .attr('fill','black')
+    .style('font-weight','bold')
+
+    
+    .text('Debt (as % of GDP)')
       
 
   
