@@ -1,7 +1,6 @@
 var svg = d3.select("#ClusterBubble");
 var width = svg.attr("width");
 var height = svg.attr("height");
-var max = 0, min = 10000000;
 
 // var selectedattr="GDP"
 // var selectedyear="2008"
@@ -70,7 +69,7 @@ function EU_Parent(selectedattr,selectedyear){
         ],
       };
   
-      // console.log(graphData)
+      console.log(graphData)
   
       for (var i = 0; i < data.length; i++) 
       {
@@ -91,7 +90,6 @@ function EU_Parent(selectedattr,selectedyear){
           }
         }
         else if(selectedattr ==='GDP (Adjusted to PPP)'){
-          
           if (data[i]["WEO Subject Code"] == "PPPGDP") {
             for (var j = 0; j < graphData.nodes.length; j++) {
               if (data[i]["Country"] == graphData.nodes[j]["name"]) {
@@ -177,8 +175,8 @@ function EU_Parent(selectedattr,selectedyear){
         var value=val
         var tooltipContent = `Name:${name}
         Value:${value}`;
-        // console.log(tooltipContent);
-        // console.log("barid",barId);
+        console.log(tooltipContent);
+        console.log("barid",barId);
         tippy('#'+barId, {
           content: tooltipContent,
           followCursor: true,
@@ -188,7 +186,7 @@ function EU_Parent(selectedattr,selectedyear){
       var simulation = d3
         .forceSimulation(graphData.nodes)
         .force("x", d3.forceX().strength(0.1).x(function(d){
-          // console.log("x",d.group)
+          console.log("x",d.group)
           return d.group;
         }))
         .force("y", d3.forceY().strength(0.1).y(height / 2))
